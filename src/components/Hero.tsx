@@ -1,21 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, ArrowUpRight, Menu, X } from 'lucide-react';
-import studioVideo from '../assets/video/creative_studio_video.mp4';
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, ArrowUpRight, FileText, Menu, X } from "lucide-react";
+import studioVideo from "../assets/video/creative_studio_video.mp4";
 
-const navItems = ['Work', 'Services', 'About Us', 'Process', 'Careers'];
+const navItems = ["About Me", "Work", "Services", "Experience", "Education"];
 
+const slugify = (label: string) =>
+  label === "About Me" ? "#abou-me" : `#${label.toLowerCase().replaceAll(" ", "-")}`;
 
-const slugify = (label: string) => `#${label.toLowerCase().replaceAll(' ', '-')}`;
+type HeroProps = {
+  /** URL of the real resume PDF, supplied when available. */
+  resumeUrl?: string;
+};
 
-export default function Hero() {
+export default function Hero({ resumeUrl }: HeroProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isShowreelOpen, setIsShowreelOpen] = useState(false);
   const ambientVideoRef = useRef<HTMLVideoElement>(null);
-  const showreelVideoRef = useRef<HTMLVideoElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuCloseRef = useRef<HTMLButtonElement>(null);
-  const showreelButtonRef = useRef<HTMLButtonElement>(null);
-  const modalCloseRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const video = ambientVideoRef.current;
@@ -29,62 +30,44 @@ export default function Hero() {
     };
 
     const resumeWhenVisible = () => {
-      if (document.visibilityState === 'visible') startBackgroundVideo();
+      if (document.visibilityState === "visible") startBackgroundVideo();
     };
 
     startBackgroundVideo();
-    video.addEventListener('canplay', startBackgroundVideo);
-    document.addEventListener('visibilitychange', resumeWhenVisible);
+    video.addEventListener("canplay", startBackgroundVideo);
+    document.addEventListener("visibilitychange", resumeWhenVisible);
 
     return () => {
-      video.removeEventListener('canplay', startBackgroundVideo);
-      document.removeEventListener('visibilitychange', resumeWhenVisible);
+      video.removeEventListener("canplay", startBackgroundVideo);
+      document.removeEventListener("visibilitychange", resumeWhenVisible);
     };
   }, []);
 
   useEffect(() => {
-    document.body.classList.toggle('is-locked', isMenuOpen || isShowreelOpen);
+    document.body.classList.toggle("is-locked", isMenuOpen);
 
     if (isMenuOpen) menuCloseRef.current?.focus();
-    if (isShowreelOpen) {
-      const video = showreelVideoRef.current;
-      if (video) {
-        video.playbackRate = 0.7;
-        void video.play().catch(() => undefined);
-      }
-      modalCloseRef.current?.focus();
-    } else {
-      showreelVideoRef.current?.pause();
-    }
 
-    return () => document.body.classList.remove('is-locked');
-  }, [isMenuOpen, isShowreelOpen]);
+    return () => document.body.classList.remove("is-locked");
+  }, [isMenuOpen]);
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') return;
+      if (event.key !== "Escape") return;
 
-      if (isShowreelOpen) {
-        setIsShowreelOpen(false);
-        requestAnimationFrame(() => showreelButtonRef.current?.focus());
-      } else if (isMenuOpen) {
+      if (isMenuOpen) {
         setIsMenuOpen(false);
         requestAnimationFrame(() => menuButtonRef.current?.focus());
       }
     };
 
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
-  }, [isMenuOpen, isShowreelOpen]);
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [isMenuOpen]);
 
   const closeMenu = () => {
     setIsMenuOpen(false);
     requestAnimationFrame(() => menuButtonRef.current?.focus());
-  };
-
-  const closeShowreel = () => {
-    setIsShowreelOpen(false);
-    requestAnimationFrame(() => showreelButtonRef.current?.focus());
   };
 
   return (
@@ -105,8 +88,14 @@ export default function Hero() {
 
         <div className="hero-gradient hero-gradient-left" aria-hidden="true" />
         <div className="hero-gradient hero-gradient-top" aria-hidden="true" />
-        <div className="hero-gradient hero-gradient-bottom" aria-hidden="true" />
-        <div className="hero-gradient hero-gradient-mobile" aria-hidden="true" />
+        <div
+          className="hero-gradient hero-gradient-bottom"
+          aria-hidden="true"
+        />
+        <div
+          className="hero-gradient hero-gradient-mobile"
+          aria-hidden="true"
+        />
 
         <div className="hero-layout">
           <header className="site-header" aria-label="Primary navigation">
@@ -116,12 +105,15 @@ export default function Hero() {
 
             <nav className="desktop-nav" aria-label="Desktop navigation">
               {navItems.map((item) => (
-                <a key={item} href={slugify(item)}>{item}</a>
+                <a key={item} href={slugify(item)}>
+                  {item}
+                </a>
               ))}
             </nav>
 
             <a className="contact-button" href="mailto:hello@hux.studio">
-              Contact Us <ArrowRight size={16} strokeWidth={1.8} aria-hidden="true" />
+              Contact Us{" "}
+              <ArrowRight size={16} strokeWidth={1.8} aria-hidden="true" />
             </a>
 
             <button
@@ -147,63 +139,85 @@ export default function Hero() {
                 <em>Inspire.</em>
               </h1>
               <p className="hero-copy reveal reveal-3">
-                We help brands turn ideas into meaningful experiences through design, strategy and creativity.
+                We help brands turn ideas into meaningful experiences through
+                design, strategy and creativity.
               </p>
               <div className="hero-actions reveal reveal-4">
-                <button
-                  ref={showreelButtonRef}
-                  className="primary-button"
-                  type="button"
-                >
-                  See Our Work
-                  <ArrowUpRight size={17} strokeWidth={1.8} aria-hidden="true" />
-                </button>
+                <a className="primary-button" href="#work">
+                  See My Arts
+                  <ArrowUpRight
+                    size={17}
+                    strokeWidth={1.8}
+                    aria-hidden="true"
+                  />
+                </a>
+                {resumeUrl ? (
+                  <a
+                    className="resume-button"
+                    href={resumeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Resume (opens in a new tab)"
+                  >
+                    Resume
+                    <FileText size={17} strokeWidth={1.8} aria-hidden="true" />
+                  </a>
+                ) : (
+                  <button
+                    className="resume-button"
+                    type="button"
+                    disabled
+                    title="Resume not yet available"
+                    aria-label="Resume (not yet available)"
+                  >
+                    Resume
+                    <FileText size={17} strokeWidth={1.8} aria-hidden="true" />
+                  </button>
+                )}
               </div>
             </div>
           </section>
-
         </div>
       </main>
 
-      <div id="mobile-menu" className={`mobile-menu${isMenuOpen ? ' is-open' : ''}`} aria-hidden={!isMenuOpen}>
-        <button className="menu-backdrop" type="button" aria-label="Close navigation" onClick={closeMenu} />
+      <div
+        id="mobile-menu"
+        className={`mobile-menu${isMenuOpen ? " is-open" : ""}`}
+        aria-hidden={!isMenuOpen}
+      >
+        <button
+          className="menu-backdrop"
+          type="button"
+          aria-label="Close navigation"
+          onClick={closeMenu}
+        />
         <nav className="menu-panel" aria-label="Mobile navigation">
           <div className="menu-header">
-            <span className="brand" aria-hidden="true">HUX<span>Graphic </span></span>
-            <button ref={menuCloseRef} className="icon-button" type="button" aria-label="Close navigation" onClick={closeMenu}>
+            <span className="brand" aria-hidden="true">
+              HUX<span>Graphic </span>
+            </span>
+            <button
+              ref={menuCloseRef}
+              className="icon-button"
+              type="button"
+              aria-label="Close navigation"
+              onClick={closeMenu}
+            >
               <X size={20} strokeWidth={1.8} aria-hidden="true" />
             </button>
           </div>
           <div className="mobile-nav-links">
             {navItems.map((item) => (
-              <a key={item} href={slugify(item)} onClick={closeMenu}>{item}</a>
+              <a key={item} href={slugify(item)} onClick={closeMenu}>
+                {item}
+              </a>
             ))}
           </div>
           <a className="mobile-contact" href="mailto:hello@hux.studio">
-            Contact Us <ArrowRight size={17} strokeWidth={1.8} aria-hidden="true" />
+            Contact Us{" "}
+            <ArrowRight size={17} strokeWidth={1.8} aria-hidden="true" />
           </a>
         </nav>
-      </div>
-
-      <div
-        className={`showreel-modal${isShowreelOpen ? ' is-open' : ''}`}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="showreel-title"
-        aria-hidden={!isShowreelOpen}
-        onMouseDown={(event) => {
-          if (event.target === event.currentTarget) closeShowreel();
-        }}
-      >
-        <div className="showreel-frame">
-          <p id="showreel-title">HUX Showreel</p>
-          <button ref={modalCloseRef} className="modal-close" type="button" aria-label="Close showreel" onClick={closeShowreel}>
-            <X size={20} strokeWidth={1.8} aria-hidden="true" />
-          </button>
-          <video ref={showreelVideoRef} loop muted playsInline controls preload="metadata">
-            <source src={studioVideo} type="video/mp4" />
-          </video>
-        </div>
       </div>
     </>
   );

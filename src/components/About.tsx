@@ -1,4 +1,5 @@
-import portrait from '../assets/images/HMH.jpg';
+import { ArrowUpRight, BriefcaseBusiness, MapPin, PenTool } from 'lucide-react';
+import portrait from '../assets/images/HMH.png';
 
 const specialties = [
   'Social Media Design',
@@ -10,46 +11,54 @@ const specialties = [
 
 export default function About() {
   return (
-    <section id="about-us" className="about-section" aria-labelledby="about-title">
+    <section id="abou-me" className="about-section" aria-labelledby="about-title">
       <div className="about-inner">
         <div className="about-grid">
+          <dl className="about-facts" aria-label="Designer at a glance">
+            <div className="about-fact about-fact--experience">
+              <dt><BriefcaseBusiness size={21} strokeWidth={1.8} aria-hidden="true" />Experience</dt>
+              <dd><strong>1+</strong><span>year in graphic design</span></dd>
+            </div>
+            <div className="about-fact">
+              <dt><MapPin size={21} strokeWidth={1.8} aria-hidden="true" />Based in</dt>
+              <dd>Bangkok<span>Thailand</span></dd>
+            </div>
+            <div className="about-fact">
+              <dt><PenTool size={21} strokeWidth={1.8} aria-hidden="true" />My toolkit</dt>
+              <dd>Adobe Photoshop<span>Adobe Illustrator</span></dd>
+            </div>
+          </dl>
+
           <div className="about-story">
             <header className="about-heading">
               <p className="about-label">About me</p>
               <div className="about-identity">
-                <h2 id="about-title" className="about-title">Han Myo Htet</h2>
+                <h2 id="about-title" className="about-title">Hi, I’m <span>Han Myo Htet.</span></h2>
                 <p className="about-role">Graphic Designer</p>
               </div>
             </header>
 
             <p className="about-intro">
-              I am a graphic designer based in Bangkok, creating focused visual work for brands, businesses and campaigns.
+              I’m a graphic designer with over a year of experience, creating focused visual work for brands, businesses and campaigns.
             </p>
             <p className="about-copy">
-              I create promotional visuals, campaign graphics, posters, branding materials and commercial design using Adobe Photoshop and Adobe Illustrator.
+              From social media and advertising to posters and branding, I create visuals that bring a clear message to life.
             </p>
             <p className="about-statement">
               For me, strong design should catch the eye, carry the message and stay in mind.
             </p>
 
-            <dl className="about-details">
-              <div>
-                <dt>Based in</dt>
-                <dd>Bangkok, Thailand</dd>
-              </div>
-              <div>
-                <dt>Specialties</dt>
-                <dd>
-                  <ul className="about-specialties" aria-label="Design specialties">
-                    {specialties.map((specialty) => <li key={specialty}>{specialty}</li>)}
-                  </ul>
-                </dd>
-              </div>
-              <div>
-                <dt>Tools</dt>
-                <dd>Adobe Photoshop, Adobe Illustrator</dd>
-              </div>
-            </dl>
+            <a className="primary-button about-work-link" href="#work">
+              View my work
+              <ArrowUpRight size={17} strokeWidth={1.8} aria-hidden="true" />
+            </a>
+
+            <div className="about-specialties-wrap">
+              <h3>What I design</h3>
+              <ul className="about-specialties" aria-label="Design specialties">
+                {specialties.map((specialty) => <li key={specialty}>{specialty}</li>)}
+              </ul>
+            </div>
           </div>
 
           <figure className="about-portrait-wrap">
@@ -57,6 +66,8 @@ export default function About() {
               className="about-portrait"
               src={portrait}
               alt="Portrait of Han Myo Htet"
+              width={1280}
+              height={1280}
               loading="lazy"
               decoding="async"
             />
