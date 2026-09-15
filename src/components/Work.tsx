@@ -5,12 +5,26 @@ import {
   Monitor,
   PenTool,
   Shapes,
+  X,
 } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   categoryLabels,
   projects,
   type ProjectCategory,
 } from "../data/projects";
+
+type GalleryFilter = "all" | ProjectCategory;
+
+const galleryFilters: Array<{ value: GalleryFilter; label: string }> = [
+  { value: "all", label: "All" },
+  { value: "advertising", label: "Advertising" },
+  { value: "branding", label: "Branding" },
+  { value: "campaign", label: "Campaign" },
+  { value: "posters", label: "Posters" },
+  { value: "social-media", label: "Social Media" },
+  { value: "illustration", label: "Illustration" },
+];
 
 const skillItems: Array<{ label: string; detail: string; icon: typeof Brush }> =
   [
@@ -20,36 +34,83 @@ const skillItems: Array<{ label: string; detail: string; icon: typeof Brush }> =
     { label: "Branding", detail: "Visual identity", icon: Shapes },
   ];
 
-function ProjectCard({ project }: { project: (typeof projects)[number] }) {
+const artworks = projects.flatMap((project) =>
+  project.images.map((image, imageIndex) => ({
+    id: `${project.id}-${imageIndex + 1}`,
+    projectType: project.projectType,
+    categories: project.categories,
+    image,
+  })),
+);
+
+type Artwork = (typeof artworks)[number];
+
+function ArtworkCard({ artwork, onOpen }: { artwork: Artwork; onOpen: (artwork: Artwork) => void }) {
   return (
-    <article
-      className={`work-project${project.images.length > 1 ? " work-project--campaign" : ""}`}
-    >
-      <div className="work-project__media">
-        {project.images.map((image) => (
-          <img
-            key={image.src}
-            src={image.src}
-            alt={image.alt}
-            width={image.width}
-            height={image.height}
-            loading="lazy"
-          />
-        ))}
-      </div>
-      <div className="work-project__body">
-        <p>
-          {project.categories
-            .map((category: ProjectCategory) => categoryLabels[category])
-            .join(" / ")}
-        </p>
-        <h3>{project.title ?? project.projectType}</h3>
-      </div>
+    <article className={`artwork-card artwork-card--${artwork.image.aspectRatio}`}>
+      <button
+        className="artwork-card__trigger"
+        type="button"
+        aria-label={`View ${artwork.projectType} artwork`}
+        onClick={() => onOpen(artwork)}
+      >
+        <img
+          src={artwork.image.src}
+          alt={artwork.image.alt}
+          width={artwork.image.width}
+          height={artwork.image.height}
+          loading="lazy"
+        />
+        <div className="artwork-card__caption">
+          <div>
+            <h3>{artwork.projectType}</h3>
+            <p>
+              {artwork.categories
+                .map((category) => categoryLabels[category])
+                .join(" / ")}
+            </p>
+          </div>
+          <span aria-hidden="true">
+            {String(artworks.indexOf(artwork) + 1).padStart(2, "0")}
+          </span>
+        </div>
+      </button>
     </article>
   );
 }
 
 export default function Work() {
+  const [activeFilter, setActiveFilter] = useState<GalleryFilter>("all");
+  const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
+  const lightboxRef = useRef<HTMLDialogElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
+  const visibleArtworks = useMemo(
+    () =>
+      activeFilter === "all"
+        ? artworks
+        : artworks.filter((artwork) =>
+            artwork.categories.includes(activeFilter),
+          ),
+    [activeFilter],
+  );
+
+  useEffect(() => {
+    if (!selectedArtwork) return;
+    const lightbox = lightboxRef.current;
+    if (!lightbox) return;
+
+    triggerRef.current = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    lightbox.showModal();
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      if (lightbox.open) lightbox.close();
+      document.body.style.overflow = previousOverflow;
+      triggerRef.current?.focus({ preventScroll: true });
+    };
+  }, [selectedArtwork]);
+
   return (
     <section id="work" className="work-section" aria-labelledby="work-title">
       <div className="work-shell">
@@ -102,12 +163,76 @@ export default function Work() {
           </div>
         </div>
 
-        <div className="work-gallery" aria-label="Selected design projects">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
+        <div className="work-gallery-panel">
+          <div
+            className="work-filters"
+            role="toolbar"
+            aria-label="Filter artwork by category"
+          >
+            {galleryFilters.map((filter) => (
+              <button
+                key={filter.value}
+                className={
+                  activeFilter === filter.value ? "is-active" : undefined
+                }
+                type="button"
+                aria-pressed={activeFilter === filter.value}
+                onClick={() => setActiveFilter(filter.value)}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
+
+          <div
+            className="work-gallery"
+            aria-live="polite"
+            aria-label="Selected artwork gallery"
+          >
+            {visibleArtworks.length > 0 ? (
+              visibleArtworks.map((artwork) => (
+                <ArtworkCard key={artwork.id} artwork={artwork} onOpen={setSelectedArtwork} />
+              ))
+            ) : (
+              <div className="work-gallery__empty">
+                <Shapes size={25} strokeWidth={1.4} aria-hidden="true" />
+                <h3>No artwork here yet</h3>
+                <p>This category is ready for future work.</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
+
+      {selectedArtwork && (
+        <dialog
+          ref={lightboxRef}
+          className="artwork-lightbox"
+          aria-label="Artwork preview"
+          onCancel={() => setSelectedArtwork(null)}
+          onClick={(event) => {
+            if (event.target === event.currentTarget) setSelectedArtwork(null);
+          }}
+        >
+          <button
+            className="artwork-lightbox__close"
+            type="button"
+            aria-label="Close artwork preview"
+            onClick={() => setSelectedArtwork(null)}
+            autoFocus
+          >
+            <X size={24} strokeWidth={1.6} aria-hidden="true" />
+          </button>
+          <figure className="artwork-lightbox__figure">
+            <img
+              src={selectedArtwork.image.src}
+              alt={selectedArtwork.image.alt}
+              width={selectedArtwork.image.width}
+              height={selectedArtwork.image.height}
+            />
+          </figure>
+        </dialog>
+      )}
     </section>
   );
 }
