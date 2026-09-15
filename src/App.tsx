@@ -2,6 +2,11 @@ import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Hero from "./components/Hero";
 import Work from "./components/Work";
+import Experience from "./components/Experience";
+import Education from "./components/Education";
+import Contact from "./components/Contact";
+
+const contactEmail = "hanmyohtet85@gmail.com";
 
 function PortfolioPage() {
   const location = useLocation();
@@ -28,8 +33,11 @@ function PortfolioPage() {
 
   return (
     <main>
-      <Hero contactUrl="mailto:hello@example.com" availableForWork />
+      <Hero availableForWork />
       <Work />
+      <Experience />
+      <Education />
+      <Contact email={contactEmail} />
     </main>
   );
 }

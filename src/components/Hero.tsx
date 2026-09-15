@@ -12,17 +12,15 @@ import {
   Sun,
   X,
 } from "lucide-react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import portrait from "../assets/images/HMH.png";
 import cvDocument from "../assets/images/Graphic Design CV(Mg-Hux).pdf";
 
 type HeroProps = {
-  contactUrl?: string;
   availableForWork?: boolean;
 };
 
 export default function Hero({
-  contactUrl,
   availableForWork = false,
 }: HeroProps) {
   const [dimmed, setDimmed] = useState(false);
@@ -76,35 +74,11 @@ export default function Hero({
             </a>
 
             <nav className="desktop-nav" aria-label="Main navigation">
-              <NavLink
-                to="/"
-                end
-                className={({ isActive }) =>
-                  isActive ? "nav-active" : undefined
-                }
-              >
-                Home
-              </NavLink>
-              <NavLink
-                to="/work"
-                className={({ isActive }) =>
-                  isActive ? "nav-active" : undefined
-                }
-              >
-                Work
-              </NavLink>
-              <a href="#intro">About</a>
-              {contactUrl ? (
-                <a href={contactUrl}>Contact</a>
-              ) : (
-                <button
-                  type="button"
-                  disabled
-                  title="Contact details coming soon"
-                >
-                  Contact
-                </button>
-              )}
+              <Link to="/#home">Home</Link>
+              <Link to="/#work">Work</Link>
+              <Link to="/#experience">Experience</Link>
+              <Link to="/#education">Education</Link>
+              <Link to="/#contact">Contact</Link>
             </nav>
 
             <div className="header-actions">
@@ -305,24 +279,26 @@ export default function Hero({
               </button>
             </div>
             <nav className="drawer-nav" aria-label="Expanded navigation">
-              <Link to="/" onClick={() => setDialog(null)}>
+              <Link to="/#home" onClick={() => setDialog(null)}>
                 Home
                 <ArrowUpRight />
               </Link>
-              <Link to="/work" onClick={() => setDialog(null)}>
+              <Link to="/#work" onClick={() => setDialog(null)}>
                 Work
                 <ArrowUpRight />
               </Link>
-              <a href="#intro" onClick={() => setDialog(null)}>
-                About
+              <Link to="/#experience" onClick={() => setDialog(null)}>
+                Experience
                 <ArrowUpRight />
-              </a>
-              {contactUrl && (
-                <a href={contactUrl}>
-                  Contact
-                  <ArrowUpRight />
-                </a>
-              )}
+              </Link>
+              <Link to="/#education" onClick={() => setDialog(null)}>
+                Education
+                <ArrowUpRight />
+              </Link>
+              <Link to="/#contact" onClick={() => setDialog(null)}>
+                Contact
+                <ArrowUpRight />
+              </Link>
             </nav>
           </div>
         </dialog>
