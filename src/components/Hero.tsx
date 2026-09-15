@@ -1,224 +1,332 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, ArrowUpRight, FileText, Menu, X } from "lucide-react";
-import studioVideo from "../assets/video/creative_studio_video.mp4";
-
-const navItems = ["About Me", "Work", "Services", "Experience", "Education"];
-
-const slugify = (label: string) =>
-  label === "About Me" ? "#abou-me" : `#${label.toLowerCase().replaceAll(" ", "-")}`;
+import {
+  ArrowRight,
+  ArrowUpRight,
+  BriefcaseBusiness,
+  Layers3,
+  MapPin,
+  Menu,
+  Moon,
+  PenTool,
+  Sparkles,
+  Sun,
+  X,
+} from "lucide-react";
+import { Link, NavLink } from "react-router-dom";
+import portrait from "../assets/images/HMH.png";
+import cvDocument from "../assets/images/Graphic Design CV(Mg-Hux).pdf";
 
 type HeroProps = {
-  /** URL of the real resume PDF, supplied when available. */
-  resumeUrl?: string;
+  contactUrl?: string;
+  availableForWork?: boolean;
 };
 
-export default function Hero({ resumeUrl }: HeroProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const ambientVideoRef = useRef<HTMLVideoElement>(null);
-  const menuButtonRef = useRef<HTMLButtonElement>(null);
-  const menuCloseRef = useRef<HTMLButtonElement>(null);
+export default function Hero({
+  contactUrl,
+  availableForWork = false,
+}: HeroProps) {
+  const [dimmed, setDimmed] = useState(false);
+  const [dialog, setDialog] = useState<"menu" | null>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const video = ambientVideoRef.current;
-    if (!video) return;
-
-    const startBackgroundVideo = () => {
-      video.muted = true;
-      video.defaultMuted = true;
-      video.playbackRate = 0.7;
-      void video.play().catch(() => undefined);
-    };
-
-    const resumeWhenVisible = () => {
-      if (document.visibilityState === "visible") startBackgroundVideo();
-    };
-
-    startBackgroundVideo();
-    video.addEventListener("canplay", startBackgroundVideo);
-    document.addEventListener("visibilitychange", resumeWhenVisible);
-
+    if (!dialog) return;
+    const element = dialogRef.current;
+    if (!element) return;
+    triggerRef.current = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    element.showModal();
+    document.body.style.overflow = "hidden";
     return () => {
-      video.removeEventListener("canplay", startBackgroundVideo);
-      document.removeEventListener("visibilitychange", resumeWhenVisible);
+      element.close();
+      document.body.style.overflow = previousOverflow;
+      triggerRef.current?.focus({ preventScroll: true });
     };
-  }, []);
-
-  useEffect(() => {
-    document.body.classList.toggle("is-locked", isMenuOpen);
-
-    if (isMenuOpen) menuCloseRef.current?.focus();
-
-    return () => document.body.classList.remove("is-locked");
-  }, [isMenuOpen]);
-
-  useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-
-      if (isMenuOpen) {
-        setIsMenuOpen(false);
-        requestAnimationFrame(() => menuButtonRef.current?.focus());
-      }
-    };
-
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
-  }, [isMenuOpen]);
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-    requestAnimationFrame(() => menuButtonRef.current?.focus());
-  };
+  }, [dialog]);
 
   return (
     <>
-      <main className="hero-shell">
-        <video
-          ref={ambientVideoRef}
-          className="hero-video"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          aria-hidden="true"
-        >
-          <source src={studioVideo} type="video/mp4" />
-        </video>
+      <section
+        id="home"
+        className={`hero${dimmed ? " hero--dimmed" : ""}`}
+        aria-labelledby="hero-title"
+      >
+        <div className="hero-art">
+          <img
+            src={portrait}
+            alt="Han Myo Htet against a blue and pink planetary backdrop"
+            width={1536}
+            height={1024}
+            loading="eager"
+          />
+        </div>
+        <div className="hero-shade" aria-hidden="true" />
 
-        <div className="hero-gradient hero-gradient-left" aria-hidden="true" />
-        <div className="hero-gradient hero-gradient-top" aria-hidden="true" />
-        <div
-          className="hero-gradient hero-gradient-bottom"
-          aria-hidden="true"
-        />
-        <div
-          className="hero-gradient hero-gradient-mobile"
-          aria-hidden="true"
-        />
-
-        <div className="hero-layout">
-          <header className="site-header" aria-label="Primary navigation">
-            <a href="#" className="brand" aria-label="HUX home">
-              HUX<span> Design </span>
+        <div className="hero-frame">
+          <header className="site-header">
+            <a className="brand" href="#home" aria-label="Han Myo Htet home">
+              <span className="brand-monogram" aria-hidden="true">
+                HUX<span>.</span>
+              </span>
+              <span className="brand-info">
+                <strong>Han Myo Htet</strong>
+                <span>Graphic Designer</span>
+              </span>
             </a>
 
-            <nav className="desktop-nav" aria-label="Desktop navigation">
-              {navItems.map((item) => (
-                <a key={item} href={slugify(item)}>
-                  {item}
-                </a>
-              ))}
+            <nav className="desktop-nav" aria-label="Main navigation">
+              <NavLink
+                to="/"
+                end
+                className={({ isActive }) =>
+                  isActive ? "nav-active" : undefined
+                }
+              >
+                Home
+              </NavLink>
+              <NavLink
+                to="/work"
+                className={({ isActive }) =>
+                  isActive ? "nav-active" : undefined
+                }
+              >
+                Work
+              </NavLink>
+              <a href="#intro">About</a>
+              {contactUrl ? (
+                <a href={contactUrl}>Contact</a>
+              ) : (
+                <button
+                  type="button"
+                  disabled
+                  title="Contact details coming soon"
+                >
+                  Contact
+                </button>
+              )}
             </nav>
 
-            <a className="contact-button" href="mailto:hello@hux.studio">
-              Contact Us{" "}
-              <ArrowRight size={16} strokeWidth={1.8} aria-hidden="true" />
-            </a>
-
-            <button
-              ref={menuButtonRef}
-              className="icon-button menu-button"
-              type="button"
-              aria-label="Open navigation"
-              aria-expanded={isMenuOpen}
-              aria-controls="mobile-menu"
-              onClick={() => setIsMenuOpen(true)}
-            >
-              <Menu size={20} strokeWidth={1.8} aria-hidden="true" />
-            </button>
+            <div className="header-actions">
+              <button
+                className="icon-button glow-toggle"
+                type="button"
+                aria-label={
+                  dimmed ? "Restore background glow" : "Dim background glow"
+                }
+                aria-pressed={dimmed}
+                onClick={() => setDimmed(!dimmed)}
+              >
+                {dimmed ? <Sun size={19} /> : <Moon size={19} />}
+              </button>
+              <button
+                className="icon-button"
+                type="button"
+                aria-label="Open navigation"
+                aria-haspopup="dialog"
+                onClick={() => setDialog("menu")}
+              >
+                <Menu size={20} />
+              </button>
+            </div>
           </header>
 
-          <section className="hero-content-wrap" aria-labelledby="hero-title">
-            <div className="hero-content">
-              <p className="eyebrow reveal reveal-1">
-                We design <span>/</span> We brand <span>/</span> We grow
+          <div className="hero-stage">
+            <div className="hero-copy">
+              <p className="hero-eyebrow">
+                <Sparkles size={15} aria-hidden="true" />
+                Crafting visual stories. Building brands.
               </p>
-              <h1 id="hero-title" className="hero-title reveal reveal-2">
-                <span>Ideas That</span>
-                <em>Inspire.</em>
+              <h1 id="hero-title">
+                Design That
+                <br />
+                Speaks Before
+                <br />
+                <span className="headline-finish">
+                  You Do<span className="headline-period">.</span>
+                </span>
               </h1>
-              <p className="hero-copy reveal reveal-3">
-                We help brands turn ideas into meaningful experiences through
-                design, strategy and creativity.
+              <p id="intro" className="hero-introduction">
+                Hi, I’m <strong>Han Myo Htet</strong>, a graphic designer in
+                Bangkok. I create social, advertising and brand visuals that
+                make a lasting impression.
               </p>
-              <div className="hero-actions reveal reveal-4">
-                <a className="primary-button" href="#work">
-                  See My Arts
-                  <ArrowUpRight
-                    size={17}
-                    strokeWidth={1.8}
-                    aria-hidden="true"
-                  />
+              <div className="hero-actions">
+                <Link className="button button-primary" to="/work">
+                  View My Work
+                  <span className="button-arrow">
+                    <ArrowRight size={18} aria-hidden="true" />
+                  </span>
+                </Link>
+                <a
+                  className="button button-secondary"
+                  href={cvDocument}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="View CV (opens in a new tab)"
+                >
+                  View CV
+                  <ArrowUpRight size={18} aria-hidden="true" />
                 </a>
-                {resumeUrl ? (
-                  <a
-                    className="resume-button"
-                    href={resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Resume (opens in a new tab)"
-                  >
-                    Resume
-                    <FileText size={17} strokeWidth={1.8} aria-hidden="true" />
-                  </a>
-                ) : (
-                  <button
-                    className="resume-button"
-                    type="button"
-                    disabled
-                    title="Resume not yet available"
-                    aria-label="Resume (not yet available)"
-                  >
-                    Resume
-                    <FileText size={17} strokeWidth={1.8} aria-hidden="true" />
-                  </button>
-                )}
               </div>
             </div>
-          </section>
-        </div>
-      </main>
 
-      <div
-        id="mobile-menu"
-        className={`mobile-menu${isMenuOpen ? " is-open" : ""}`}
-        aria-hidden={!isMenuOpen}
-      >
-        <button
-          className="menu-backdrop"
-          type="button"
-          aria-label="Close navigation"
-          onClick={closeMenu}
-        />
-        <nav className="menu-panel" aria-label="Mobile navigation">
-          <div className="menu-header">
-            <span className="brand" aria-hidden="true">
-              HUX<span>Graphic </span>
-            </span>
-            <button
-              ref={menuCloseRef}
-              className="icon-button"
-              type="button"
-              aria-label="Close navigation"
-              onClick={closeMenu}
+            <div className="glass-panel designer-card">
+              <PenTool size={35} strokeWidth={1.25} aria-hidden="true" />
+              <span>
+                Graphic
+                <br />
+                Designer
+              </span>
+              <span className="designer-rule" aria-hidden="true" />
+            </div>
+
+            <aside className="hero-side" aria-label="Designer details">
+              <div className="glass-panel location-card">
+                {availableForWork ? (
+                  <>
+                    <span className="availability-dot" aria-hidden="true" />
+                    <div>
+                      <strong>Available for freelance work</strong>
+                      <span>Open to new projects</span>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <MapPin size={19} strokeWidth={1.7} aria-hidden="true" />
+                    <div>
+                      <strong>Based in Bangkok</strong>
+                      <span>Thailand</span>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              <div className="glass-panel tools-card">
+                <h2>Tools I use</h2>
+                <div className="tool-list">
+                  <div>
+                    <span className="adobe-mark adobe-ps" aria-hidden="true">
+                      Ps
+                    </span>
+                    <span>Photoshop</span>
+                  </div>
+                  <div>
+                    <span className="adobe-mark adobe-ai" aria-hidden="true">
+                      Ai
+                    </span>
+                    <span>Illustrator</span>
+                  </div>
+                </div>
+                <p>From first idea to final detail.</p>
+              </div>
+            </aside>
+
+            <div
+              className="hero-facts"
+              aria-label="Experience and design focus"
             >
-              <X size={20} strokeWidth={1.8} aria-hidden="true" />
-            </button>
+              <div className="glass-panel fact-card">
+                <span className="fact-icon fact-icon--blue">
+                  <BriefcaseBusiness
+                    size={23}
+                    strokeWidth={1.6}
+                    aria-hidden="true"
+                  />
+                </span>
+                <div>
+                  <strong className="fact-value">1+</strong>
+                  <h2>Year of experience</h2>
+                  <p>
+                    Creating visuals with
+                    <br />
+                    clarity and purpose.
+                  </p>
+                </div>
+              </div>
+              <div className="glass-panel fact-card">
+                <span className="fact-icon fact-icon--violet">
+                  <Layers3 size={23} strokeWidth={1.6} aria-hidden="true" />
+                </span>
+                <div>
+                  <strong className="fact-value fact-value--text">
+                    Brand &amp; social
+                  </strong>
+                  <h2>Design with a message</h2>
+                  <p>
+                    Social media, advertising
+                    <br />
+                    and brand identities.
+                  </p>
+                </div>
+              </div>
+              <div className="glass-panel fact-card">
+                <span className="fact-icon fact-icon--pink">
+                  <PenTool size={23} strokeWidth={1.6} aria-hidden="true" />
+                </span>
+                <div>
+                  <strong className="fact-value fact-value--text">
+                    Print &amp; digital
+                  </strong>
+                  <h2>Across formats</h2>
+                  <p>
+                    Posters, campaign graphics
+                    <br />
+                    and commercial visuals.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="mobile-nav-links">
-            {navItems.map((item) => (
-              <a key={item} href={slugify(item)} onClick={closeMenu}>
-                {item}
+        </div>
+      </section>
+
+      {dialog && (
+        <dialog
+          ref={dialogRef}
+          className={`hero-dialog hero-dialog--${dialog}`}
+          aria-labelledby="dialog-title"
+          onCancel={() => setDialog(null)}
+          onClick={(event) => {
+            if (event.target === event.currentTarget) setDialog(null);
+          }}
+        >
+          <div className="dialog-content">
+            <div className="dialog-header">
+              <h2 id="dialog-title">Explore</h2>
+              <button
+                className="icon-button"
+                type="button"
+                aria-label="Close dialog"
+                onClick={() => setDialog(null)}
+                autoFocus
+              >
+                <X size={22} />
+              </button>
+            </div>
+            <nav className="drawer-nav" aria-label="Expanded navigation">
+              <Link to="/" onClick={() => setDialog(null)}>
+                Home
+                <ArrowUpRight />
+              </Link>
+              <Link to="/work" onClick={() => setDialog(null)}>
+                Work
+                <ArrowUpRight />
+              </Link>
+              <a href="#intro" onClick={() => setDialog(null)}>
+                About
+                <ArrowUpRight />
               </a>
-            ))}
+              {contactUrl && (
+                <a href={contactUrl}>
+                  Contact
+                  <ArrowUpRight />
+                </a>
+              )}
+            </nav>
           </div>
-          <a className="mobile-contact" href="mailto:hello@hux.studio">
-            Contact Us{" "}
-            <ArrowRight size={17} strokeWidth={1.8} aria-hidden="true" />
-          </a>
-        </nav>
-      </div>
+        </dialog>
+      )}
     </>
   );
 }
