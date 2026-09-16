@@ -24,7 +24,7 @@ const education = [
   {
     title: "BTEC International Level-3 Diploma in IT",
     institution: "Youth International College (YIC)",
-    period: "2021 - 2022",
+    period: "2022 - 2023",
     images: [level3Diploma, level3Result],
   },
 ] as const;

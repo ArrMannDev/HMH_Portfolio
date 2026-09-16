@@ -14,9 +14,9 @@ import artwork13 from '../assets/images/art-work13.jpg';
 import artwork14 from '../assets/images/art-work14.jpg';
 import artwork15 from '../assets/images/art-work15.jpg';
 import artwork16 from '../assets/images/art-work16.jpg';
-import illustration1 from '../assets/images/illu-1.jpg';
-import illustration2 from '../assets/images/illu-2.jpg';
-import illustration3 from '../assets/images/illu-3.jpg';
+import artwork17 from '../assets/images/art-work17.jpg';
+import artwork18 from '../assets/images/art-work18.jpg';
+import artwork19 from '../assets/images/art-work19.jpg';
 
 export type ProjectCategory = 'social-media' | 'advertising' | 'posters' | 'branding' | 'campaign' | 'illustration';
 export type ProjectLayout = 'featured' | 'portrait' | 'square' | 'landscape';
@@ -203,11 +203,11 @@ export const projects: Project[] = [
     slug: 'editorial-illustrations',
     title: null,
     projectType: 'Editorial Illustration',
-    categories: ['illustration', 'posters'],
+    categories: ['posters'],
     images: [
-      { src: illustration1, alt: "Textured Father's Day illustration of a parent and child riding a bicycle", width: 720, height: 1280, aspectRatio: 'portrait' },
-      { src: illustration2, alt: 'Warm-toned expressive movement poster featuring a dancer in motion', width: 853, height: 1280, aspectRatio: 'portrait' },
-      { src: illustration3, alt: 'Dreamlike editorial illustration of a person seated on a flower-covered hill', width: 905, height: 1280, aspectRatio: 'portrait' },
+      { src: artwork17, alt: "Textured Father's Day illustration of a parent and child riding a bicycle", width: 720, height: 1280, aspectRatio: 'portrait' },
+      { src: artwork18, alt: 'Warm-toned expressive movement poster featuring a dancer in motion', width: 853, height: 1280, aspectRatio: 'portrait' },
+      { src: artwork19, alt: 'Dreamlike editorial illustration of a person seated on a flower-covered hill', width: 905, height: 1280, aspectRatio: 'portrait' },
     ],
     featured: true,
     layout: 'featured',
