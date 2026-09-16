@@ -34,14 +34,13 @@ const skillItems: Array<{ label: string; detail: string; icon: typeof Brush }> =
     { label: "Branding", detail: "Visual identity", icon: Shapes },
   ];
 
-const artworks = projects.flatMap((project) =>
-  project.images.map((image, imageIndex) => ({
-    id: `${project.id}-${imageIndex + 1}`,
+const artworks = projects.map((project) => ({
+    id: project.id,
     projectType: project.projectType,
     categories: project.categories,
-    image,
-  })),
-);
+    image: project.images[0],
+    images: project.images,
+  }));
 
 type Artwork = (typeof artworks)[number];
 
@@ -82,6 +81,7 @@ function ArtworkCard({ artwork, onOpen }: { artwork: Artwork; onOpen: (artwork: 
 export default function Work() {
   const [activeFilter, setActiveFilter] = useState<GalleryFilter>("all");
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const lightboxRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
   const visibleArtworks = useMemo(
@@ -110,6 +110,16 @@ export default function Work() {
       triggerRef.current?.focus({ preventScroll: true });
     };
   }, [selectedArtwork]);
+
+  const openArtwork = (artwork: Artwork) => {
+    setSelectedImageIndex(0);
+    setSelectedArtwork(artwork);
+  };
+
+  const closeArtwork = () => {
+    setSelectedArtwork(null);
+    setSelectedImageIndex(0);
+  };
 
   return (
     <section id="work" className="work-section" aria-labelledby="work-title">
@@ -191,7 +201,7 @@ export default function Work() {
           >
             {visibleArtworks.length > 0 ? (
               visibleArtworks.map((artwork) => (
-                <ArtworkCard key={artwork.id} artwork={artwork} onOpen={setSelectedArtwork} />
+                <ArtworkCard key={artwork.id} artwork={artwork} onOpen={openArtwork} />
               ))
             ) : (
               <div className="work-gallery__empty">
@@ -208,29 +218,63 @@ export default function Work() {
         <dialog
           ref={lightboxRef}
           className="artwork-lightbox"
-          aria-label="Artwork preview"
-          onCancel={() => setSelectedArtwork(null)}
+          aria-label={`${selectedArtwork.projectType} preview`}
+          onCancel={closeArtwork}
           onClick={(event) => {
-            if (event.target === event.currentTarget) setSelectedArtwork(null);
+            if (event.target === event.currentTarget) closeArtwork();
           }}
         >
           <button
             className="artwork-lightbox__close"
             type="button"
             aria-label="Close artwork preview"
-            onClick={() => setSelectedArtwork(null)}
+            onClick={closeArtwork}
             autoFocus
           >
             <X size={24} strokeWidth={1.6} aria-hidden="true" />
           </button>
-          <figure className="artwork-lightbox__figure">
-            <img
-              src={selectedArtwork.image.src}
-              alt={selectedArtwork.image.alt}
-              width={selectedArtwork.image.width}
-              height={selectedArtwork.image.height}
-            />
-          </figure>
+          <div
+            className={`artwork-lightbox__viewer${
+              selectedArtwork.images.length === 1 ? " artwork-lightbox__viewer--single" : ""
+            }`}
+          >
+            {selectedArtwork.images.length > 1 && (
+              <div className="artwork-lightbox__thumbnails" aria-label="Related artwork images">
+                {selectedArtwork.images.map((image, index) => (
+                  <button
+                    type="button"
+                    className={selectedImageIndex === index ? "is-active" : undefined}
+                    aria-label={`View image ${index + 1} of ${selectedArtwork.images.length}`}
+                    aria-pressed={selectedImageIndex === index}
+                    onClick={() => setSelectedImageIndex(index)}
+                    key={image.src}
+                  >
+                    <img
+                      src={image.src}
+                      alt=""
+                      width={image.width}
+                      height={image.height}
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <figure className="artwork-lightbox__figure" aria-live="polite">
+              <img
+                src={selectedArtwork.images[selectedImageIndex].src}
+                alt={selectedArtwork.images[selectedImageIndex].alt}
+                width={selectedArtwork.images[selectedImageIndex].width}
+                height={selectedArtwork.images[selectedImageIndex].height}
+              />
+              <figcaption>
+                <strong>{selectedArtwork.projectType}</strong>
+                <span>
+                  Image {selectedImageIndex + 1} of {selectedArtwork.images.length}
+                </span>
+              </figcaption>
+            </figure>
+          </div>
         </dialog>
       )}
     </section>

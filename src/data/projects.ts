@@ -17,6 +17,21 @@ import artwork16 from '../assets/images/art-work16.jpg';
 import artwork17 from '../assets/images/art-work17.jpg';
 import artwork18 from '../assets/images/art-work18.jpg';
 import artwork19 from '../assets/images/art-work19.jpg';
+import apple01 from '../assets/images/illustrations/apple/Apple-01.jpg';
+import apple02 from '../assets/images/illustrations/apple/Apple-02.jpg';
+import apple03 from '../assets/images/illustrations/apple/Apple-03.jpg';
+import calendar01 from '../assets/images/illustrations/calendar/Calendar-01.jpg';
+import calendar02 from '../assets/images/illustrations/calendar/Calendar-02.jpg';
+import calendar03 from '../assets/images/illustrations/calendar/Calendar-03.jpg';
+import chocolate01 from '../assets/images/illustrations/chocolate/Chocolate-01.jpg';
+import chocolate02 from '../assets/images/illustrations/chocolate/Chocolate-02.jpg';
+import chocolate03 from '../assets/images/illustrations/chocolate/Chocolate-03.jpg';
+import flower01 from '../assets/images/illustrations/flower/flower-01.jpg';
+import flower02 from '../assets/images/illustrations/flower/flower-02.jpg';
+import flower03 from '../assets/images/illustrations/flower/flower-03.jpg';
+import gift01 from '../assets/images/illustrations/gift/Gift-01.jpg';
+import gift02 from '../assets/images/illustrations/gift/Gift-02.jpg';
+import gift03 from '../assets/images/illustrations/gift/Gift-03.jpg';
 
 export type ProjectCategory = 'social-media' | 'advertising' | 'posters' | 'branding' | 'campaign' | 'illustration';
 export type ProjectLayout = 'featured' | 'portrait' | 'square' | 'landscape';
@@ -50,6 +65,76 @@ export const categoryLabels: Record<ProjectCategory, string> = {
 };
 
 export const projects: Project[] = [
+  {
+    id: 'apple-illustrations',
+    slug: 'apple-illustrations',
+    title: null,
+    projectType: 'Apple Illustration Set',
+    categories: ['illustration'],
+    images: [
+      { src: apple01, alt: 'Bold outlined illustration of a red apple', width: 1500, height: 1500, aspectRatio: 'square' },
+      { src: apple02, alt: 'Alternate outlined apple illustration from the same series', width: 1500, height: 1500, aspectRatio: 'square' },
+      { src: apple03, alt: 'Third outlined apple illustration from the same series', width: 1500, height: 1500, aspectRatio: 'square' },
+    ],
+    featured: true,
+    layout: 'square',
+  },
+  {
+    id: 'calendar-illustrations',
+    slug: 'calendar-illustrations',
+    title: null,
+    projectType: 'Calendar Illustration Set',
+    categories: ['illustration'],
+    images: [
+      { src: calendar01, alt: 'Bold outlined February calendar illustration with a heart', width: 1500, height: 1500, aspectRatio: 'square' },
+      { src: calendar02, alt: 'Alternate calendar illustration from the same series', width: 1500, height: 1500, aspectRatio: 'square' },
+      { src: calendar03, alt: 'Third calendar illustration from the same series', width: 1500, height: 1500, aspectRatio: 'square' },
+    ],
+    featured: true,
+    layout: 'square',
+  },
+  {
+    id: 'chocolate-illustrations',
+    slug: 'chocolate-illustrations',
+    title: null,
+    projectType: 'Chocolate Illustration Set',
+    categories: ['illustration'],
+    images: [
+      { src: chocolate01, alt: 'Bold outlined chocolate and gift box illustration', width: 1500, height: 1500, aspectRatio: 'square' },
+      { src: chocolate02, alt: 'Alternate chocolate illustration from the same series', width: 1500, height: 1500, aspectRatio: 'square' },
+      { src: chocolate03, alt: 'Third chocolate illustration from the same series', width: 1500, height: 1500, aspectRatio: 'square' },
+    ],
+    featured: true,
+    layout: 'square',
+  },
+  {
+    id: 'flower-illustrations',
+    slug: 'flower-illustrations',
+    title: null,
+    projectType: 'Flower Illustration Set',
+    categories: ['illustration'],
+    images: [
+      { src: flower01, alt: 'Bold outlined bouquet illustration with pink flowers', width: 1500, height: 1500, aspectRatio: 'square' },
+      { src: flower02, alt: 'Alternate flower bouquet illustration from the same series', width: 1500, height: 1500, aspectRatio: 'square' },
+      { src: flower03, alt: 'Third flower bouquet illustration from the same series', width: 1500, height: 1500, aspectRatio: 'square' },
+    ],
+    featured: true,
+    layout: 'square',
+  },
+  {
+    id: 'gift-illustrations',
+    slug: 'gift-illustrations',
+    title: null,
+    projectType: 'Gift Illustration Set',
+    categories: ['illustration'],
+    images: [
+      { src: gift01, alt: 'Bold outlined pink gift box illustration with floating hearts', width: 1500, height: 1500, aspectRatio: 'square' },
+      { src: gift02, alt: 'Alternate gift box illustration from the same series', width: 1500, height: 1500, aspectRatio: 'square' },
+      { src: gift03, alt: 'Third gift box illustration from the same series', width: 1500, height: 1500, aspectRatio: 'square' },
+    ],
+    featured: true,
+    layout: 'square',
+  },
   {
     id: 'social-media-campaign',
     slug: 'social-media-campaign',
