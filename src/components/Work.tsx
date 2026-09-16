@@ -195,6 +195,7 @@ export default function Work() {
           </div>
 
           <div
+            key={activeFilter}
             className="work-gallery"
             aria-live="polite"
             aria-label="Selected artwork gallery"
