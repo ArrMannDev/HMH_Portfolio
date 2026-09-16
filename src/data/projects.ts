@@ -203,11 +203,9 @@ export const projects: Project[] = [
     slug: 'editorial-illustrations',
     title: null,
     projectType: 'Editorial Illustration',
-    categories: ['posters'],
+    categories: ['posters','illustration'],
     images: [
       { src: artwork17, alt: "Textured Father's Day illustration of a parent and child riding a bicycle", width: 720, height: 1280, aspectRatio: 'portrait' },
-      { src: artwork18, alt: 'Warm-toned expressive movement poster featuring a dancer in motion', width: 853, height: 1280, aspectRatio: 'portrait' },
-      { src: artwork19, alt: 'Dreamlike editorial illustration of a person seated on a flower-covered hill', width: 905, height: 1280, aspectRatio: 'portrait' },
     ],
     featured: true,
     layout: 'featured',
