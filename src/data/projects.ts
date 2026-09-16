@@ -69,7 +69,7 @@ export const projects: Project[] = [
     id: 'apple-illustrations',
     slug: 'apple-illustrations',
     title: null,
-    projectType: 'Apple Illustration Set',
+    projectType: 'Apple Icon',
     categories: ['illustration'],
     images: [
       { src: apple01, alt: 'Bold outlined illustration of a red apple', width: 1500, height: 1500, aspectRatio: 'square' },
@@ -83,7 +83,7 @@ export const projects: Project[] = [
     id: 'calendar-illustrations',
     slug: 'calendar-illustrations',
     title: null,
-    projectType: 'Calendar Illustration Set',
+    projectType: 'Calendar Icon',
     categories: ['illustration'],
     images: [
       { src: calendar01, alt: 'Bold outlined February calendar illustration with a heart', width: 1500, height: 1500, aspectRatio: 'square' },
@@ -97,7 +97,7 @@ export const projects: Project[] = [
     id: 'chocolate-illustrations',
     slug: 'chocolate-illustrations',
     title: null,
-    projectType: 'Chocolate Illustration Set',
+    projectType: 'Chocolate Icon',
     categories: ['illustration'],
     images: [
       { src: chocolate01, alt: 'Bold outlined chocolate and gift box illustration', width: 1500, height: 1500, aspectRatio: 'square' },
@@ -111,7 +111,7 @@ export const projects: Project[] = [
     id: 'flower-illustrations',
     slug: 'flower-illustrations',
     title: null,
-    projectType: 'Flower Illustration Set',
+    projectType: 'Flower Icon',
     categories: ['illustration'],
     images: [
       { src: flower01, alt: 'Bold outlined bouquet illustration with pink flowers', width: 1500, height: 1500, aspectRatio: 'square' },
@@ -125,7 +125,7 @@ export const projects: Project[] = [
     id: 'gift-illustrations',
     slug: 'gift-illustrations',
     title: null,
-    projectType: 'Gift Illustration Set',
+    projectType: 'Gift Icon',
     categories: ['illustration'],
     images: [
       { src: gift01, alt: 'Bold outlined pink gift box illustration with floating hearts', width: 1500, height: 1500, aspectRatio: 'square' },
