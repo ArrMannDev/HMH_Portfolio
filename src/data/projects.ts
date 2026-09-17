@@ -314,7 +314,6 @@ export const projects: Project[] = [
     categories: ['posters'],
     images: [
       { src: artwork18, alt: 'Warm-toned expressive movement poster featuring a dancer in motion', width: 853, height: 1280, aspectRatio: 'portrait' },
-      { src: artwork19, alt: 'Dreamlike editorial illustration of a person seated on a flower-covered hill', width: 905, height: 1280, aspectRatio: 'portrait' },
     ],
     featured: true,
     layout: 'featured',
