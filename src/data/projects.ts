@@ -272,6 +272,18 @@ export const projects: Project[] = [
     layout: 'featured',
   },
   {
+    id: 'food-promotion',
+    slug: 'food-promotion',
+    title: null,
+    projectType: 'Food Promotion',
+    categories: ['advertising', 'campaign', 'posters'],
+    images: [
+      { src: artwork15, alt: 'Healthy meal promotion featuring grilled chicken, vegetables, grains and avocado', width: 904, height: 1280, aspectRatio: 'portrait' },
+    ],
+    featured: true,
+    layout: 'featured',
+  },
+  {
     id: 'energy-drink-poster',
     slug: 'energy-drink-poster',
     title: null,
