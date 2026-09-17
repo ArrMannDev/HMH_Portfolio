@@ -308,4 +308,16 @@ export const projects: Project[] = [
     featured: true,
     layout: 'featured',
   },
+  {
+    id: 'visual-narratives',
+    slug: 'visual-narratives',
+    title: null,
+    projectType: 'Visual Narratives',
+    categories: ['posters'],
+    images: [
+      { src: artwork19, alt: 'Dreamlike editorial illustration of a person seated on a flower-covered hill', width: 905, height: 1280, aspectRatio: 'portrait' },
+    ],
+    featured: true,
+    layout: 'featured',
+  },
 ];
