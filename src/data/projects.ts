@@ -266,7 +266,6 @@ export const projects: Project[] = [
     categories: ['advertising', 'campaign', 'posters'],
     images: [
       { src: artwork14, alt: 'Red spicy chicken promotion featuring fried chicken and an order call to action', width: 904, height: 1280, aspectRatio: 'portrait' },
-      { src: artwork15, alt: 'Healthy meal promotion featuring grilled chicken, vegetables, grains and avocado', width: 904, height: 1280, aspectRatio: 'portrait' },
     ],
     featured: true,
     layout: 'featured',
