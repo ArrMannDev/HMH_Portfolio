@@ -1,4 +1,6 @@
-import type { ImageSource } from '../lib/image';
+import type { Project } from '../types/artwork';
+export { categoryLabels } from '../types/artwork';
+export type { Project, ProjectCategory, ProjectImage, ProjectLayout } from '../types/artwork';
 import artwork1 from '../assets/images/art-work1.jpg';
 import artwork2 from '../assets/images/art-work2.jpg';
 import artwork3 from '../assets/images/art-work3.jpg';
@@ -33,37 +35,6 @@ import flower03 from '../assets/images/illustrations/flower/flower-03.jpg';
 import gift01 from '../assets/images/illustrations/gift/Gift-01.jpg';
 import gift02 from '../assets/images/illustrations/gift/Gift-02.jpg';
 import gift03 from '../assets/images/illustrations/gift/Gift-03.jpg';
-
-export type ProjectCategory = 'social-media' | 'advertising' | 'posters' | 'branding' | 'campaign' | 'illustration';
-export type ProjectLayout = 'featured' | 'portrait' | 'square' | 'landscape';
-
-export type ProjectImage = {
-  src: ImageSource;
-  alt: string;
-  width: number;
-  height: number;
-  aspectRatio: 'portrait' | 'square' | 'landscape';
-};
-
-export type Project = {
-  id: string;
-  slug: string;
-  title: string | null;
-  projectType: string;
-  categories: ProjectCategory[];
-  images: ProjectImage[];
-  featured: boolean;
-  layout: ProjectLayout;
-};
-
-export const categoryLabels: Record<ProjectCategory, string> = {
-  'social-media': 'Social Media',
-  advertising: 'Advertising',
-  posters: 'Posters',
-  branding: 'Branding',
-  campaign: 'Campaign',
-  illustration: 'Illustration',
-};
 
 export const projects: Project[] = [
   {

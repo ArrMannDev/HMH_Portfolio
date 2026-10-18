@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-18T16:15:00Z",
+  "title": "Design System: HUX portfolio and Studio manager",
+  "extensions": {
+    "colorMeta": {
+      "background": { "role": "neutral", "displayName": "Midnight navy", "tonalRamp": ["oklch(15% 0.035 255)", "oklch(25% 0.035 255)", "oklch(35% 0.035 255)", "oklch(45% 0.035 255)", "oklch(55% 0.035 255)", "oklch(65% 0.035 255)", "oklch(80% 0.035 255)", "oklch(95% 0.035 255)"] },
+      "text": { "role": "neutral", "displayName": "Pale text", "tonalRamp": ["oklch(15% 0.01 280)", "oklch(25% 0.01 280)", "oklch(35% 0.01 280)", "oklch(45% 0.01 280)", "oklch(55% 0.01 280)", "oklch(65% 0.01 280)", "oklch(80% 0.01 280)", "oklch(95% 0.01 280)"] },
+      "muted": { "role": "neutral", "displayName": "Shared muted", "tonalRamp": ["oklch(15% 0.02 275)", "oklch(25% 0.02 275)", "oklch(35% 0.02 275)", "oklch(45% 0.02 275)", "oklch(55% 0.02 275)", "oklch(65% 0.02 275)", "oklch(80% 0.02 275)", "oklch(95% 0.02 275)"] },
+      "blue": { "role": "primary", "displayName": "HUX blue", "tonalRamp": ["oklch(15% 0.15 265)", "oklch(25% 0.15 265)", "oklch(35% 0.15 265)", "oklch(45% 0.15 265)", "oklch(55% 0.15 265)", "oklch(65% 0.15 265)", "oklch(80% 0.15 265)", "oklch(95% 0.15 265)"] },
+      "violet": { "role": "secondary", "displayName": "HUX violet", "tonalRamp": ["oklch(15% 0.17 300)", "oklch(25% 0.17 300)", "oklch(35% 0.17 300)", "oklch(45% 0.17 300)", "oklch(55% 0.17 300)", "oklch(65% 0.17 300)", "oklch(80% 0.17 300)", "oklch(95% 0.17 300)"] },
+      "pink": { "role": "secondary", "displayName": "HUX pink", "tonalRamp": ["oklch(15% 0.14 335)", "oklch(25% 0.14 335)", "oklch(35% 0.14 335)", "oklch(45% 0.14 335)", "oklch(55% 0.14 335)", "oklch(65% 0.14 335)", "oklch(80% 0.14 335)", "oklch(95% 0.14 335)"] },
+      "glass-fill": { "role": "neutral", "displayName": "Public glass fill", "tonalRamp": ["oklch(15% 0.03 265)", "oklch(25% 0.03 265)", "oklch(35% 0.03 265)", "oklch(45% 0.03 265)", "oklch(55% 0.03 265)", "oklch(65% 0.03 265)", "oklch(80% 0.03 265)", "oklch(95% 0.03 265)"] },
+      "glass-border": { "role": "neutral", "displayName": "Public glass border", "tonalRamp": ["oklch(15% 0.02 265)", "oklch(25% 0.02 265)", "oklch(35% 0.02 265)", "oklch(45% 0.02 265)", "oklch(55% 0.02 265)", "oklch(65% 0.02 265)", "oklch(80% 0.02 265)", "oklch(95% 0.02 265)"] },
+      "studio-surface": { "role": "neutral", "displayName": "Studio surface", "tonalRamp": ["oklch(15% 0.03 255)", "oklch(25% 0.03 255)", "oklch(35% 0.03 255)", "oklch(45% 0.03 255)", "oklch(55% 0.03 255)", "oklch(65% 0.03 255)", "oklch(80% 0.03 255)", "oklch(95% 0.03 255)"] },
+      "studio-border": { "role": "neutral", "displayName": "Studio border", "tonalRamp": ["oklch(15% 0.03 260)", "oklch(25% 0.03 260)", "oklch(35% 0.03 260)", "oklch(45% 0.03 260)", "oklch(55% 0.03 260)", "oklch(65% 0.03 260)", "oklch(80% 0.03 260)", "oklch(95% 0.03 260)"] },
+      "studio-muted": { "role": "neutral", "displayName": "Studio muted", "tonalRamp": ["oklch(15% 0.025 260)", "oklch(25% 0.025 260)", "oklch(35% 0.025 260)", "oklch(45% 0.025 260)", "oklch(55% 0.025 260)", "oklch(65% 0.025 260)", "oklch(80% 0.025 260)", "oklch(95% 0.025 260)"] },
+      "studio-field": { "role": "neutral", "displayName": "Studio field", "tonalRamp": ["oklch(15% 0.03 255)", "oklch(25% 0.03 255)", "oklch(35% 0.03 255)", "oklch(45% 0.03 255)", "oklch(55% 0.03 255)", "oklch(65% 0.03 255)", "oklch(80% 0.03 255)", "oklch(95% 0.03 255)"] },
+      "studio-primary": { "role": "primary", "displayName": "Studio blue", "tonalRamp": ["oklch(15% 0.15 270)", "oklch(25% 0.15 270)", "oklch(35% 0.15 270)", "oklch(45% 0.15 270)", "oklch(55% 0.15 270)", "oklch(65% 0.15 270)", "oklch(80% 0.15 270)", "oklch(95% 0.15 270)"] },
+      "studio-primary-hover": { "role": "primary", "displayName": "Studio blue hover", "tonalRamp": ["oklch(15% 0.15 270)", "oklch(25% 0.15 270)", "oklch(35% 0.15 270)", "oklch(45% 0.15 270)", "oklch(55% 0.15 270)", "oklch(65% 0.15 270)", "oklch(80% 0.15 270)", "oklch(95% 0.15 270)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Public display", "purpose": "Existing public hero; not a studio heading." },
+      "headline": { "displayName": "Studio page title", "purpose": "Dashboard library and editor titles." },
+      "title": { "displayName": "Studio section title", "purpose": "Artwork and project details headings." },
+      "body": { "displayName": "Studio body", "purpose": "Operational text and base controls." },
+      "label": { "displayName": "Field label", "purpose": "Visible field names." },
+      "metadata": { "displayName": "Metadata", "purpose": "Counts, sorting, saving state and account detail." }
+    },
+    "shadows": [
+      { "name": "public-glass", "value": "inset 0 1px 0 rgb(255 255 255 / 14%), 0 12px 36px rgb(0 0 20 / 14%)", "purpose": "Inherited public glass panel only; dashboard has no decorative shadows." },
+      { "name": "public-primary-action", "value": "0 8px 28px rgb(28 68 217 / 24%)", "purpose": "Inherited public primary action." }
+    ],
+    "motion": [
+      { "name": "studio-control", "value": "background 160ms ease, border-color 160ms ease", "purpose": "Studio buttons and links; disabled under prefers-reduced-motion: reduce." }
+    ],
+    "breakpoints": [
+      { "name": "studio-intermediate-max", "value": "1099px" },
+      { "name": "studio-mobile-max", "value": "767px" },
+      { "name": "studio-narrow-max", "value": "479px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Studio primary button", "kind": "button", "refersTo": "studio-button-primary", "description": "The main save or create action.",
+      "html": "<button class=\"ds-primary\">Save changes</button>",
+      "css": ".ds-primary { display:inline-flex; align-items:center; justify-content:center; gap:.6rem; min-height:46px; border:1px solid #3c5bdf; border-radius:8px; padding:.65rem 1rem; font:600 .875rem/1.6 'Plus Jakarta Sans',sans-serif; color:white; background:#3c5bdf; cursor:pointer; transition:background 160ms ease,border-color 160ms ease; } .ds-primary:hover:not(:disabled) { background:#4a68ea; border-color:#4a68ea; } .ds-primary:focus-visible { outline:2px solid #f6a5eb; outline-offset:4px; } .ds-primary:disabled { opacity:.5; cursor:not-allowed; } @media(prefers-reduced-motion:reduce) { .ds-primary { transition:none; } }"
+    },
+    {
+      "name": "Studio secondary button", "kind": "button", "refersTo": "studio-button-secondary", "description": "A supporting action such as choosing images or unpublishing.",
+      "html": "<button class=\"ds-secondary\">Choose images</button>",
+      "css": ".ds-secondary { display:inline-flex; align-items:center; justify-content:center; min-height:46px; border:1px solid #2c3950; border-radius:8px; padding:.65rem 1rem; font:600 .875rem/1.6 'Plus Jakarta Sans',sans-serif; color:var(--color-text,#f7f8ff); background:#0c182b; cursor:pointer; transition:background 160ms ease,border-color 160ms ease; } .ds-secondary:hover:not(:disabled) { background:#1a2a43; border-color:#67748d; } .ds-secondary:focus-visible { outline:2px solid #f6a5eb; outline-offset:4px; } .ds-secondary:disabled { opacity:.5; cursor:not-allowed; } @media(prefers-reduced-motion:reduce) { .ds-secondary { transition:none; } }"
+    },
+    {
+      "name": "Studio danger button", "kind": "button", "description": "Explicit destructive action, separated from normal saves.",
+      "html": "<button class=\"ds-danger\">Delete project</button>",
+      "css": ".ds-danger { min-height:46px; border:1px solid #854b59; border-radius:8px; padding:.65rem 1rem; font:600 .875rem/1.6 'Plus Jakarta Sans',sans-serif; color:#ffc0c8; background:transparent; cursor:pointer; transition:background 160ms ease,border-color 160ms ease; } .ds-danger:hover:not(:disabled) { background:#45222f; } .ds-danger:focus-visible { outline:2px solid #f6a5eb; outline-offset:4px; } .ds-danger:disabled { opacity:.5; cursor:not-allowed; } @media(prefers-reduced-motion:reduce) { .ds-danger { transition:none; } }"
+    },
+    {
+      "name": "Studio input", "kind": "input", "refersTo": "studio-field", "description": "Visible label and a dark editable field.",
+      "html": "<label class=\"ds-label\">Project type <input class=\"ds-input\" value=\"Illustration\" /></label>",
+      "css": ".ds-label { display:grid; gap:.55rem; color:var(--color-text,#f7f8ff); font:600 .8125rem/1.6 'Plus Jakarta Sans',sans-serif; } .ds-input { min-height:46px; min-width:0; border:1px solid #2c3950; border-radius:8px; padding:.75rem .85rem; color:var(--color-text,#f7f8ff); background:#081426; font:400 .875rem/1.6 'Plus Jakarta Sans',sans-serif; caret-color:var(--color-pink,#e567d7); } .ds-input:focus-visible { outline:2px solid var(--color-pink,#e567d7); outline-offset:4px; } .ds-input::placeholder { color:#9baac1; opacity:1; }"
+    },
+    {
+      "name": "Studio navigation", "kind": "nav", "description": "Current artwork location and a secondary public-site destination.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Dashboard navigation\"><a class=\"ds-current\" href=\"#artwork\">Artwork</a><a href=\"#website\">View website</a></nav>",
+      "css": ".ds-nav { display:flex; align-items:center; gap:1.5rem; font:.875rem/1.6 'Plus Jakarta Sans',sans-serif; } .ds-nav a { display:inline-flex; align-items:center; min-height:44px; color:#b4bfd2; text-decoration:none; transition:background 160ms ease,border-color 160ms ease; } .ds-nav .ds-current { color:white; } .ds-nav a:focus-visible { outline:2px solid #f6a5eb; outline-offset:4px; } @media(prefers-reduced-motion:reduce) { .ds-nav a { transition:none; } }"
+    },
+    {
+      "name": "Visibility badges", "kind": "chip", "description": "Noninteractive text and dot identify draft and published states.",
+      "html": "<div class=\"ds-badges\"><span class=\"ds-status\">Draft</span><span class=\"ds-status ds-published\">Published</span></div>",
+      "css": ".ds-badges { display:flex; gap:.75rem; } .ds-status { display:inline-flex; gap:.4rem; align-items:center; width:fit-content; padding:.25rem .65rem; color:#e1e5f0; border:1px solid #56617a; border-radius:5px; background:#172239; font:600 .6875rem/1.6 'Plus Jakarta Sans',sans-serif; white-space:nowrap; } .ds-status::before { content:''; width:5px; height:5px; border-radius:50%; background:currentColor; } .ds-published { color:#a7efcb; background:#12322b; border-color:#356b57; }"
+    },
+    {
+      "name": "Artwork library container", "kind": "card", "refersTo": "studio-artwork-cover", "description": "An open project composition; the empty cover reproduces the shipped no-image state without invented artwork.",
+      "html": "<a class=\"ds-project\" href=\"#project\"><div class=\"ds-cover\">Add your first image</div><div class=\"ds-info\"><h3>Project title</h3><p>Category</p></div><div class=\"ds-meta\"><span>0 images</span><span>Order 0</span></div></a>",
+      "css": ".ds-project { display:block; width:320px; max-width:100%; color:var(--color-text,#f7f8ff); text-decoration:none; font:.875rem/1.6 'Plus Jakarta Sans',sans-serif; } .ds-cover { display:grid; place-content:center; aspect-ratio:4/3; border-radius:12px; overflow:hidden; background:#0c182b; color:#b4bfd2; } .ds-info { margin-top:1rem; } .ds-info h3 { margin:0; font-size:1rem; line-height:1.5; } .ds-info p { margin:.3rem 0 0; color:#b4bfd2; font-size:.75rem; } .ds-meta { display:flex; justify-content:space-between; margin-top:.8rem; padding-top:.7rem; border-top:1px solid #2c3950; color:#b4bfd2; font-size:.75rem; font-variant-numeric:tabular-nums; } .ds-project:hover h3 { color:#d9baff; } .ds-project:focus-visible { outline:2px solid #f6a5eb; outline-offset:4px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "HUX Studio manager",
+    "overview": "The private dashboard extends the existing HUX identity: deep navy, Plus Jakarta Sans, pale text, and violet and pink accents. Its character is quiet and practical. Artwork remains the visual subject; controls and metadata establish order around it.\n\nThis document records the finished dashboard and the shared tokens it inherits. The public portfolio keeps its existing composition, artwork, glass treatments, gradients, and more expressive display typography. Dashboard rules below are scoped to private administration and do not prescribe a redesign of that public surface. Evidence is `src/index.css`, `src/components/auth/Auth.css`, and `src/components/dashboard/Dashboard.css` with the corresponding dashboard components. Review captures are in `.impeccable/review/`; they are QA artifacts, not shipped artwork assets.",
+    "keyCharacteristics": ["Shared navy identity with a quieter private workspace.", "Image-led library and uncropped artwork previews.", "Flat, bordered controls and clear text labels.", "Persistent save actions and explicit publication states."],
+    "rules": [
+      { "name": "The Surface Scope Rule", "body": "Preserve the shared identity tokens while applying flat studio materials only to private administration.", "section": "colors" },
+      { "name": "The Operational Hierarchy Rule", "body": "Keep the page title, section titles, field labels, and helper text visibly distinct without borrowing the public hero scale.", "section": "typography" },
+      { "name": "The Flat Studio Rule", "body": "Establish dashboard grouping with spacing, borders, and solid tone before adding depth effects.", "section": "elevation" }
+    ],
+    "dos": ["Do preserve the public portfolio's existing identity, composition, and local artwork.", "Do show complete artwork inside contained preview frames.", "Do keep draft, published, loading, empty, error, and saving states explicit in text.", "Do keep labels, visible keyboard focus, and reachable save actions on narrow screens.", "Do use the dashboard's flat studio surfaces for private administration."],
+    "donts": ["Don't export dashboard density or flatness rules into a public portfolio redesign.", "Don't add decorative glass, gradients, metrics, or invented client content to the dashboard.", "Don't turn the public surface's existing eyebrow/kicker treatments into a reusable typography rule; those inherited exceptions are not canonized here.", "Don't treat review fixtures or QA screenshots as application content or shipped assets."]
+  }
+}

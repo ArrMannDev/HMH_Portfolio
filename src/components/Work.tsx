@@ -12,9 +12,9 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   categoryLabels,
-  projects,
+  type Project,
   type ProjectCategory,
-} from "../data/projects";
+} from "../types/artwork";
 import { imageSrc } from "../lib/image";
 
 type GalleryFilter = "all" | ProjectCategory;
@@ -37,15 +37,16 @@ const skillItems: Array<{ label: string; detail: string; icon: typeof Brush }> =
     { label: "Branding", detail: "Visual identity", icon: Shapes },
   ];
 
-const artworks = projects.map((project) => ({
+const makeArtworks = (projects: Project[]) => projects.filter((project) => project.images.length > 0).map((project, index) => ({
     id: project.id,
+    number: index + 1,
     projectType: project.projectType,
     categories: project.categories,
     image: { ...project.images[0], src: imageSrc(project.images[0].src) },
     images: project.images.map((image) => ({ ...image, src: imageSrc(image.src) })),
   }));
 
-type Artwork = (typeof artworks)[number];
+type Artwork = ReturnType<typeof makeArtworks>[number];
 
 function ArtworkCard({ artwork, onOpen }: { artwork: Artwork; onOpen: (artwork: Artwork) => void }) {
   return (
@@ -73,7 +74,7 @@ function ArtworkCard({ artwork, onOpen }: { artwork: Artwork; onOpen: (artwork: 
             </p>
           </div>
           <span aria-hidden="true">
-            {String(artworks.indexOf(artwork) + 1).padStart(2, "0")}
+            {String(artwork.number).padStart(2, "0")}
           </span>
         </div>
       </button>
@@ -81,7 +82,8 @@ function ArtworkCard({ artwork, onOpen }: { artwork: Artwork; onOpen: (artwork: 
   );
 }
 
-export default function Work() {
+export default function Work({ projects }: { projects: Project[] }) {
+  const artworks = useMemo(() => makeArtworks(projects), [projects]);
   const [activeFilter, setActiveFilter] = useState<GalleryFilter>("all");
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -94,7 +96,7 @@ export default function Work() {
         : artworks.filter((artwork) =>
             artwork.categories.includes(activeFilter),
           ),
-    [activeFilter],
+    [activeFilter, artworks],
   );
 
   useEffect(() => {
