@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, type CSSProperties, type MouseEvent, type ReactNode } from "react";
 import "./Folder.css";
 

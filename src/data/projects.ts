@@ -1,3 +1,4 @@
+import type { ImageSource } from '../lib/image';
 import artwork1 from '../assets/images/art-work1.jpg';
 import artwork2 from '../assets/images/art-work2.jpg';
 import artwork3 from '../assets/images/art-work3.jpg';
@@ -37,7 +38,7 @@ export type ProjectCategory = 'social-media' | 'advertising' | 'posters' | 'bran
 export type ProjectLayout = 'featured' | 'portrait' | 'square' | 'landscape';
 
 export type ProjectImage = {
-  src: string;
+  src: ImageSource;
   alt: string;
   width: number;
   height: number;

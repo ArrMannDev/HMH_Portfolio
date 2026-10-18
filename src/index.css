@@ -71,7 +71,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f6a5eb; outline-offs
 .button-secondary { background: linear-gradient(120deg, #7830ce, #5422ac); }
 .button-secondary:disabled { opacity: 0.65; }
 
-.glass-panel { border: 1px solid var(--glass-border); border-radius: var(--radius-panel); background: var(--glass-fill); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); box-shadow: inset 0 1px 0 rgb(255 255 255 / 14%), 0 12px 36px rgb(0 0 20 / 14%); }
+.glass-panel { border: 1px solid var(--glass-border); border-radius: var(--radius-panel); background: var(--glass-fill); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); box-shadow: inset 0 1px 0 rgb(255 255 255 / 14%), 0 12px 36px rgb(0 0 20 / 14%); }
 .designer-card { position: absolute; top: 23%; left: 46%; display: grid; justify-items: center; gap: 1rem; padding: 1.35rem 1.2rem 1rem; width: 108px; text-align: center; color: #f2f0ff; font-size: 0.8125rem; font-weight: 600; line-height: 1.4; }
 .designer-rule { height: 2px; width: 34px; background: #9f99ff; border-radius: 2px; }
 .hero-side { position: absolute; top: 5%; right: var(--page-gutter); bottom: 32%; width: clamp(160px, 15vw, 220px); display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; }
@@ -181,7 +181,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f6a5eb; outline-offs
 }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; } }
-@media (prefers-reduced-transparency: reduce) { .glass-panel { background: #202b48; backdrop-filter: none; -webkit-backdrop-filter: none; } .hero-dialog::backdrop { backdrop-filter: none; } }
+@media (prefers-reduced-transparency: reduce) { .glass-panel { background: #202b48; -webkit-backdrop-filter: none; backdrop-filter: none; } .hero-dialog::backdrop { backdrop-filter: none; } }
 @supports not (backdrop-filter: blur(1px)) { .glass-panel { background: rgb(24 34 61 / 94%); } }
 
 .work-section {
@@ -496,8 +496,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f6a5eb; outline-offs
 .artwork-lightbox[open] { animation: artwork-lightbox-in 180ms ease-out both; }
 .artwork-lightbox::backdrop {
   background: rgb(0 2 10 / 86%);
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 .artwork-lightbox__viewer {
   width: 100%;
@@ -592,8 +592,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f6a5eb; outline-offs
   border-radius: 50%;
   color: white;
   background: rgb(12 18 34 / 84%);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   transition: background 180ms ease, transform 180ms ease;
 }
 .artwork-lightbox__close:hover { background: rgb(43 34 72 / 96%); }
@@ -653,7 +653,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f6a5eb; outline-offs
   .artwork-card,
   .work-gallery__empty { background: #111c36; }
   .artwork-lightbox::backdrop,
-  .artwork-lightbox__close { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .artwork-lightbox__close { -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
 
 .experience-section {
@@ -1021,8 +1021,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f6a5eb; outline-offs
 .certificate-lightbox[open] { animation: artwork-lightbox-in 180ms ease-out both; }
 .certificate-lightbox::backdrop {
   background: rgb(0 2 10 / 88%);
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 .certificate-lightbox__figure {
   width: 100%;
@@ -1067,8 +1067,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f6a5eb; outline-offs
   border-radius: 50%;
   color: #f7f7fb;
   background: rgb(12 18 34 / 84%);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   transition: background 180ms ease, transform 180ms ease;
 }
 .certificate-lightbox__close:hover { background: rgb(43 34 72 / 96%); }
@@ -1109,8 +1109,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f6a5eb; outline-offs
   .education-card { background: #111c36; }
   .certificate-lightbox::backdrop,
   .certificate-lightbox__close {
-    backdrop-filter: none;
     -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
 

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Brush,
   Layers3,
@@ -13,6 +15,7 @@ import {
   projects,
   type ProjectCategory,
 } from "../data/projects";
+import { imageSrc } from "../lib/image";
 
 type GalleryFilter = "all" | ProjectCategory;
 
@@ -38,8 +41,8 @@ const artworks = projects.map((project) => ({
     id: project.id,
     projectType: project.projectType,
     categories: project.categories,
-    image: project.images[0],
-    images: project.images,
+    image: { ...project.images[0], src: imageSrc(project.images[0].src) },
+    images: project.images.map((image) => ({ ...image, src: imageSrc(image.src) })),
   }));
 
 type Artwork = (typeof artworks)[number];
@@ -202,7 +205,7 @@ export default function Work() {
           >
             {visibleArtworks.length > 0 ? (
               visibleArtworks.map((artwork) => (
-                <ArtworkCard key={artwork.id} artwork={artwork} onOpen={openArtwork} />
+                <ArtworkCard key={`${artwork.id}-${artwork.image.src}`} artwork={artwork} onOpen={openArtwork} />
               ))
             ) : (
               <div className="work-gallery__empty">

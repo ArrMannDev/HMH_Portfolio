@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useState, type MouseEvent } from "react";
 import { CalendarDays, GraduationCap, X } from "lucide-react";
 import donatoCertificate from "../assets/images/Donato-certificate.jpg";
@@ -13,19 +15,19 @@ const education = [
     title: "Mastering Adobe Photoshop",
     institution: "Donato",
     period: "8 July 2026 - 8 September 2026",
-    images: [donatoCertificate],
+    images: [donatoCertificate.src],
   },
   {
     title: "UK Degree Higher National Diploma in Computing",
     institution: "Youth International College (YIC)",
     period: "2023 - 2025",
-    images: [level5Diploma, level5Result1, level5Result2],
+    images: [level5Diploma.src, level5Result1.src, level5Result2.src],
   },
   {
     title: "BTEC International Level-3 Diploma in IT",
     institution: "Youth International College (YIC)",
     period: "2022 - 2023",
-    images: [level3Diploma, level3Result],
+    images: [level3Diploma.src, level3Result.src],
   },
 ] as const;
 

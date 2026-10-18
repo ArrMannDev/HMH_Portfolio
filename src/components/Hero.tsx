@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
@@ -12,9 +14,10 @@ import {
   Sun,
   X,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import portrait from "../assets/images/HMH.png";
-import cvDocument from "../assets/images/Graphic Design CV(Mg-Hux).pdf";
+
+const cvDocument = "/documents/Graphic Design CV(Mg-Hux).pdf";
 
 type HeroProps = {
   availableForWork?: boolean;
@@ -52,7 +55,7 @@ export default function Hero({
       >
         <div className="hero-art">
           <img
-            src={portrait}
+            src={portrait.src}
             alt="Han Myo Htet against a blue and pink planetary backdrop"
             width={1536}
             height={1024}
@@ -74,11 +77,11 @@ export default function Hero({
             </a>
 
             <nav className="desktop-nav" aria-label="Main navigation">
-              <Link to="/#home">Home</Link>
-              <Link to="/#work">Work</Link>
-              <Link to="/#experience">Experience</Link>
-              <Link to="/#education">Education</Link>
-              <Link to="/#contact">Contact</Link>
+              <Link href="/#home">Home</Link>
+              <Link href="/#work">Work</Link>
+              <Link href="/#experience">Experience</Link>
+              <Link href="/#education">Education</Link>
+              <Link href="/#contact">Contact</Link>
             </nav>
 
             <div className="header-actions">
@@ -126,7 +129,7 @@ export default function Hero({
                 make a lasting impression.
               </p>
               <div className="hero-actions">
-                <Link className="button button-primary" to="/work">
+                <Link className="button button-primary" href="/#work">
                   View My Work
                   <span className="button-arrow">
                     <ArrowRight size={18} aria-hidden="true" />
@@ -279,23 +282,23 @@ export default function Hero({
               </button>
             </div>
             <nav className="drawer-nav" aria-label="Expanded navigation">
-              <Link to="/#home" onClick={() => setDialog(null)}>
+              <Link href="/#home" onClick={() => setDialog(null)}>
                 Home
                 <ArrowUpRight />
               </Link>
-              <Link to="/#work" onClick={() => setDialog(null)}>
+              <Link href="/#work" onClick={() => setDialog(null)}>
                 Work
                 <ArrowUpRight />
               </Link>
-              <Link to="/#experience" onClick={() => setDialog(null)}>
+              <Link href="/#experience" onClick={() => setDialog(null)}>
                 Experience
                 <ArrowUpRight />
               </Link>
-              <Link to="/#education" onClick={() => setDialog(null)}>
+              <Link href="/#education" onClick={() => setDialog(null)}>
                 Education
                 <ArrowUpRight />
               </Link>
-              <Link to="/#contact" onClick={() => setDialog(null)}>
+              <Link href="/#contact" onClick={() => setDialog(null)}>
                 Contact
                 <ArrowUpRight />
               </Link>
