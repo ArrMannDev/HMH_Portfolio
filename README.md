@@ -213,8 +213,10 @@ signed links may remain usable for up to five minutes after unpublishing.
 
 ### Recovery and limits
 
-- Reordering and removing images only takes effect when saving. Unsaved edits
-  prompt before ordinary link navigation or closing the page.
+- Reordering and removing images only takes effect when saving. Dashboard links
+  use document navigation so the browser's leave-page warning protects unsaved
+  edits during link navigation, Back/Forward, reloading, signing out, or closing.
+  Enter saves without changing publication status; unpublishing is explicit.
 - A version conflict rejects the save instead of overwriting another session.
 - Deleting a project requires typing `DELETE` and removes database records.
   Uploaded Storage files are deliberately retained for manual recovery/cleanup.
@@ -231,6 +233,7 @@ npm run typecheck
 npm run build
 npm run test:artworks
 npm run test:auth
+npm run test:editor
 node scripts/verify-dashboard-fixture.mjs
 ```
 

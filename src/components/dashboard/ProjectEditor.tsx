@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { ArrowDown, ArrowLeft, ArrowUp, ImagePlus, Trash2, Upload } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { categoryLabels, MAX_FILE_BYTES, MAX_IMAGES, uploadTypes, type AdminImage, type AdminProject, type ProjectCategory } from "../../types/artwork";
@@ -24,7 +22,6 @@ async function dimensions(file: File) {
 }
 
 export default function ProjectEditor({ projectId }: { projectId?: string }) {
-  const router = useRouter();
   const [project, setProject] = useState<AdminProject | null>(null);
   const [fields, setFields] = useState<Fields>(emptyFields);
   const [images, setImages] = useState<EditorImage[]>([]);
@@ -43,6 +40,7 @@ export default function ProjectEditor({ projectId }: { projectId?: string }) {
   const errorRef = useRef<HTMLDivElement>(null);
   const previews = useRef<string[]>([]);
   const operation = useRef<AbortController | null>(null);
+  const navigationAllowed = useRef(false);
   const dirty = snapshot(fields, images) !== baseline;
 
   function acceptProject(value: AdminProject) {
@@ -70,14 +68,14 @@ export default function ProjectEditor({ projectId }: { projectId?: string }) {
   }, [error]);
   useEffect(() => {
     if (!dirty && !busy) return;
-    const unload = (e: BeforeUnloadEvent) => { e.preventDefault(); };
-    const navigate = (e: MouseEvent) => {
-      const anchor = (e.target as Element).closest?.("a");
-      if (!anchor || anchor.target === "_blank" || e.ctrlKey || e.metaKey) return;
-      if (!window.confirm(busy ? "An operation is still running. Leave this editor?" : "Leave without saving your changes?")) { e.preventDefault(); e.stopPropagation(); }
+    // Dashboard links use document navigation so this also covers Back/Forward.
+    const unload = (e: BeforeUnloadEvent) => {
+      if (navigationAllowed.current) return;
+      e.preventDefault();
+      e.returnValue = "";
     };
-    window.addEventListener("beforeunload", unload); document.addEventListener("click", navigate, true);
-    return () => { window.removeEventListener("beforeunload", unload); document.removeEventListener("click", navigate, true); };
+    window.addEventListener("beforeunload", unload);
+    return () => window.removeEventListener("beforeunload", unload);
   }, [dirty, busy]);
 
   function update<K extends keyof Fields>(key: K, value: Fields[K]) {
@@ -105,7 +103,10 @@ export default function ProjectEditor({ projectId }: { projectId?: string }) {
       });
       acceptProject(saved);
       setSuccess(isPublished ? "Project published. It is available in the Supabase gallery." : "Draft saved. This project is not visible in the Supabase gallery.");
-      if (!project) router.replace(`/dashboard/projects/${saved.id}`);
+      if (!project) {
+        navigationAllowed.current = true;
+        window.location.replace(`/dashboard/projects/${saved.id}`);
+      }
     } catch (err) { if (!controller.signal.aborted) setError(errorMessage(err)); }
     finally { if (!controller.signal.aborted) setBusy(false); }
   }
@@ -152,16 +153,17 @@ export default function ProjectEditor({ projectId }: { projectId?: string }) {
     try {
       await dashboardRequest(`/api/admin/projects/${project.id}`, { method: "DELETE", body: JSON.stringify({ updated_at: project.updated_at, confirm: "DELETE" }) });
       setBaseline(snapshot(fields, images)); setSuccess("Project deleted. Original uploaded files were retained in Storage for manual recovery.");
-      router.replace("/dashboard");
+      navigationAllowed.current = true;
+      window.location.replace("/dashboard");
     } catch (err) { setError(errorMessage(err)); setBusy(false); }
   }
 
   if (loading) return <div className="studio-editor-loading" aria-busy="true"><h1>Loading project...</h1><p>Opening your artwork and project details.</p></div>;
-  if (projectId && !project) return <div className="studio-message studio-message--error" role="alert"><h1>Project could not be opened</h1><p>{error}</p><button className="studio-button" onClick={() => setRetry((r) => r + 1)}>Retry</button> <Link className="studio-button" href="/dashboard">Back to library</Link></div>;
+  if (projectId && !project) return <div className="studio-message studio-message--error" role="alert"><h1>Project could not be opened</h1><p>{error}</p><button className="studio-button" onClick={() => setRetry((r) => r + 1)}>Retry</button> <a className="studio-button" href="/dashboard">Back to library</a></div>;
 
   return (
     <>
-      <Link className="studio-back" href="/dashboard"><ArrowLeft size={16} aria-hidden="true" /> Artwork library</Link>
+      <a className="studio-back" href="/dashboard"><ArrowLeft size={16} aria-hidden="true" /> Artwork library</a>
       <div className="studio-page-heading studio-page-heading--editor"><div><h1>{project ? "Edit project" : "New project"}<span>.</span></h1><p>{project ? "Give the work its context. Let the images lead." : "Start with the details. Add artwork after saving your draft."}</p></div><span className={`studio-status${project?.is_published ? " studio-status--published" : ""}`}>{project?.is_published ? "Published" : "Draft"}</span></div>
       {error && <div className="studio-message studio-message--error" role="alert" tabIndex={-1} ref={errorRef}><p>{error}</p>{error.includes("another session") && <button className="studio-button" onClick={() => { if (window.confirm("Discard unsaved changes and reload this project?")) setRetry((r) => r + 1); }}>Reload saved project</button>}{error.includes("session expired") && <a className="studio-button" href="/dashboard/login" target="_blank" rel="noopener noreferrer">Sign in in a new tab</a>}</div>}
       {success && <p className="studio-message studio-message--success" role="status">{success}</p>}
@@ -195,7 +197,7 @@ export default function ProjectEditor({ projectId }: { projectId?: string }) {
               <div className="studio-publishing-note"><strong>{project?.is_published ? "This project is published." : "Only you can see this draft."}</strong><p>{project?.is_published ? "Saving updates the live Supabase gallery. Unpublish to make it private." : "Publishing makes all saved images visible in the Supabase gallery."}</p></div>
             </aside>
           </div>
-          <div className="studio-save-bar"><span role="status">{busy ? progress || "Saving changes..." : dirty ? "Unsaved changes" : project ? "All changes saved" : "Ready for a new project"}</span><div>{project?.is_published ? <><button className="studio-button" type="submit" value="draft">Unpublish</button><button className="studio-button studio-button--primary" type="submit" value="save">Save changes</button></> : <><button className="studio-button" type="submit" value="draft">{project ? "Save draft" : "Create draft"}</button>{project && <button className="studio-button studio-button--primary" type="submit" value="publish">Publish project</button>}</>}</div></div>
+          <div className="studio-save-bar"><span role="status">{busy ? progress || "Saving changes..." : dirty ? "Unsaved changes" : project ? "All changes saved" : "Ready for a new project"}</span><div>{project?.is_published ? <><button className="studio-button studio-button--primary" type="submit" value="save">Save changes</button><button className="studio-button" type="submit" value="draft">Unpublish</button></> : <><button className="studio-button" type="submit" value="draft">{project ? "Save draft" : "Create draft"}</button>{project && <button className="studio-button studio-button--primary" type="submit" value="publish">Publish project</button>}</>}</div></div>
         </fieldset>
       </form>
       {project && <section className="studio-danger" aria-labelledby="delete-project-title"><div><h2 id="delete-project-title">Delete project</h2><p>Remove this project and its image records from the library. Uploaded files are retained in Storage, but project deletion cannot be undone here.</p></div>{!deleteOpen ? <button className="studio-button studio-button--danger" disabled={busy} onClick={() => setDeleteOpen(true)}>Delete project</button> : <div className="studio-delete-confirm"><label htmlFor="delete-confirm">Type DELETE to confirm</label><input id="delete-confirm" value={deleteConfirm} onChange={(e) => setDeleteConfirm(e.target.value)} autoComplete="off" disabled={busy} /><div><button className="studio-button" disabled={busy} onClick={() => { setDeleteOpen(false); setDeleteConfirm(""); }}>Cancel</button><button className="studio-button studio-button--danger" disabled={deleteConfirm !== "DELETE" || busy} onClick={() => void deleteProject()}>Permanently delete project</button></div></div>}</section>}

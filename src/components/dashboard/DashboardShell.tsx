@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ArrowUpRight, Images, LogOut } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -7,9 +6,9 @@ export default function DashboardShell({ email, children }: { email: string; chi
     <div className="studio">
       <a className="studio-skip" href="#studio-content">Skip to content</a>
       <header className="studio-header">
-        <Link className="studio-brand" href="/dashboard" aria-label="HUX artwork dashboard">HUX<span>.</span><small>Studio manager</small></Link>
+        <a className="studio-brand" href="/dashboard" aria-label="HUX artwork dashboard">HUX<span>.</span><small>Studio manager</small></a>
         <nav aria-label="Dashboard navigation">
-          <Link className="studio-nav-current" href="/dashboard"><Images size={17} aria-hidden="true" /> Artwork</Link>
+          <a className="studio-nav-current" href="/dashboard"><Images size={17} aria-hidden="true" /> Artwork</a>
           <a href="/#work" target="_blank" rel="noopener noreferrer">View website <ArrowUpRight size={16} aria-hidden="true" /></a>
         </nav>
         <div className="studio-account">
