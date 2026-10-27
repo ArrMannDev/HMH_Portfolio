@@ -2,6 +2,7 @@
 
 import {
   Brush,
+  ChevronDown,
   Layers3,
   Megaphone,
   Monitor,
@@ -18,6 +19,7 @@ import {
 import { imageSrc } from "../lib/image";
 
 type GalleryFilter = "all" | ProjectCategory;
+const ARTWORK_BATCH_SIZE = 9;
 
 const galleryFilters: Array<{ value: GalleryFilter; label: string }> = [
   { value: "all", label: "All" },
@@ -85,10 +87,14 @@ function ArtworkCard({ artwork, onOpen }: { artwork: Artwork; onOpen: (artwork: 
 export default function Work({ projects }: { projects: Project[] }) {
   const artworks = useMemo(() => makeArtworks(projects), [projects]);
   const [activeFilter, setActiveFilter] = useState<GalleryFilter>("all");
+  const [visibleCount, setVisibleCount] = useState(ARTWORK_BATCH_SIZE);
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const lightboxRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+  const focusNextArtwork = useRef<number | null>(null);
   const visibleArtworks = useMemo(
     () =>
       activeFilter === "all"
@@ -98,6 +104,28 @@ export default function Work({ projects }: { projects: Project[] }) {
           ),
     [activeFilter, artworks],
   );
+  const shownArtworks = visibleArtworks.slice(0, visibleCount);
+  const hasMore = shownArtworks.length < visibleArtworks.length;
+
+  useEffect(() => {
+    const target = loadMoreRef.current;
+    if (!hasMore || selectedArtwork || !target || !("IntersectionObserver" in window)) return;
+    let active = true;
+    const observer = new IntersectionObserver((entries) => {
+      if (!active || !entries.some((entry) => entry.isIntersecting)) return;
+      active = false;
+      observer.disconnect();
+      setVisibleCount((count) => Math.min(count + ARTWORK_BATCH_SIZE, visibleArtworks.length));
+    }, { rootMargin: "200px 0px" });
+    observer.observe(target);
+    return () => { active = false; observer.disconnect(); };
+  }, [activeFilter, visibleCount, visibleArtworks.length, hasMore, selectedArtwork]);
+
+  useEffect(() => {
+    if (focusNextArtwork.current === null) return;
+    galleryRef.current?.querySelectorAll<HTMLButtonElement>(".artwork-card__trigger")[focusNextArtwork.current]?.focus();
+    focusNextArtwork.current = null;
+  }, [visibleCount]);
 
   useEffect(() => {
     if (!selectedArtwork) return;
@@ -192,7 +220,11 @@ export default function Work({ projects }: { projects: Project[] }) {
                 }
                 type="button"
                 aria-pressed={activeFilter === filter.value}
-                onClick={() => setActiveFilter(filter.value)}
+                onClick={() => {
+                  setActiveFilter(filter.value);
+                  setVisibleCount(ARTWORK_BATCH_SIZE);
+                  focusNextArtwork.current = null;
+                }}
               >
                 {filter.label}
               </button>
@@ -201,12 +233,14 @@ export default function Work({ projects }: { projects: Project[] }) {
 
           <div
             key={activeFilter}
+            id="artwork-gallery"
+            ref={galleryRef}
             className="work-gallery"
             aria-live="polite"
             aria-label="Selected artwork gallery"
           >
             {visibleArtworks.length > 0 ? (
-              visibleArtworks.map((artwork) => (
+              shownArtworks.map((artwork) => (
                 <ArtworkCard key={`${artwork.id}-${artwork.image.src}`} artwork={artwork} onOpen={openArtwork} />
               ))
             ) : (
@@ -217,6 +251,19 @@ export default function Work({ projects }: { projects: Project[] }) {
               </div>
             )}
           </div>
+          {visibleArtworks.length > 0 && (
+            <div className="work-load-more" ref={loadMoreRef}>
+             
+              {hasMore && (
+                <button type="button" aria-controls="artwork-gallery" onClick={() => {
+                  focusNextArtwork.current = shownArtworks.length;
+                  setVisibleCount((count) => Math.min(count + ARTWORK_BATCH_SIZE, visibleArtworks.length));
+                }}>
+                  Load more work <ChevronDown size={16} aria-hidden="true" />
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
 

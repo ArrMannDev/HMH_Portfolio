@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "test:auth": "node scripts/verify-auth.mjs",
     "test:editor": "node scripts/verify-editor-safety.mjs",
+    "test:gallery": "node scripts/verify-gallery-scroll.mjs",
     "test:artworks": "node scripts/verify-artwork-validation.mjs && node scripts/verify-artwork-api.mjs"
   },
   "dependencies": {

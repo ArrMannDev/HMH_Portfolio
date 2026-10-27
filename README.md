@@ -157,6 +157,11 @@ or browser-persisted auth token is required.
    published Supabase projects. Drafts never appear publicly. The original static
    collection remains available as an explicit rollback with `ARTWORK_SOURCE=local`.
 
+The public gallery shows nine projects initially and reveals nine more near the
+bottom as visitors scroll. Category changes restart at nine. A Load more work
+button remains available for keyboard users or browsers without IntersectionObserver.
+This progressively renders the fetched collection; it does not change database queries.
+
 Switching sources does not import, modify, or delete local artwork. The original
 21 grouped local projects and their images remain available in the repository.
 In Supabase mode an empty/unavailable database does **not** restore local artwork
@@ -234,6 +239,7 @@ npm run build
 npm run test:artworks
 npm run test:auth
 npm run test:editor
+npm run test:gallery
 node scripts/verify-dashboard-fixture.mjs
 ```
 

@@ -378,6 +378,10 @@ button:focus-visible, a:focus-visible { outline: 2px solid #f6a5eb; outline-offs
   align-items: start;
   gap: clamp(0.8rem, 1.35vw, 1.15rem);
 }
+.work-load-more { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid rgb(218 225 255 / 15%); }
+.work-load-more p { margin: 0; color: var(--color-muted); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+.work-load-more button { display: inline-flex; align-items: center; justify-content: center; gap: 0.65rem; min-height: 44px; padding: 0.65rem 1rem; border: 1px solid var(--glass-border); border-radius: 8px; color: var(--color-text); background: transparent; font-size: 0.75rem; font-weight: 600; }
+.work-load-more button:hover { border-color: var(--color-pink); background: var(--glass-fill); }
 .artwork-card {
   position: relative;
   isolation: isolate;
